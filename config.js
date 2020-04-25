@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 const config = {
-  token: 'NzAzMzEyNDc1ODM1MDcyNTEz.XqN58A.Qa68qN68qP7V4D8EVUzrxwJ-p38',  
+  token: '',  
   twitterAPIKey: '',
   twitterAPISecret: '',
   twitterAccessToken: '',
