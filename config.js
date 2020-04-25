@@ -1,0 +1,128 @@
+/* eslint-disable max-len */
+const config = {
+  token: 'NzAzMzEyNDc1ODM1MDcyNTEz.XqN58A.Qa68qN68qP7V4D8EVUzrxwJ-p38',  
+  twitterAPIKey: '',
+  twitterAPISecret: '',
+  twitterAccessToken: '',
+  twitterAccessTokenSecret: '',
+  followedTwitterUsers: [],
+
+  // Webhooks
+  twitterHookID: '',
+  twitterHookToken: '',
+
+  // Settings
+  defaultSettings: {
+    prefix: '.',
+    verifiedRole: 'Acknowledged',
+    modRole: 'Templar (mod)',
+    adminRole: 'Grand Master(admin)',
+    staffChat: '687736456693022802',
+    actionLog: 'channelID',
+    modLog: 'channelID',
+    musicText: 'channelID',
+    music: 'channelID',
+  },
+
+  // UserDB
+  userDBDefaults: {
+    friendcode: '',
+    roles: [],
+    nicknames: [],
+    usernames: [],
+    infractions: [],
+    unmuteTime: 0,
+  },
+
+  // VillagerDB 
+  villagerDBDefaults: {
+    birthday: Date,
+    adopters: [],
+    // Other villager related info perhaps for the wiki command to pull from, or the calender
+  },
+
+  // Bot Perms and Stuff
+  ownerID: '663330802721095701',
+
+  admins: ['userID', 'userID'],
+
+  support: ['userID', 'userID'],
+
+  // Guild Perms and Stuff
+  permLevels: [
+    {
+      level: 0,
+      name: 'User',
+      check: () => true,
+    },
+    {
+      level: 1,
+      name: 'Verified',
+      check: (client, message) => {
+        if (message.guild) {
+          const verifiedRole = message.guild.roles.cache.find((r) => r.name.toLowerCase() === client.getSettings(message.guild).verifiedRole.toLowerCase());
+
+          if (verifiedRole && message.member.roles.cache.has(verifiedRole.id)) {
+            return true;
+          }
+        }
+        return false;
+      },
+    },
+    {
+      level: 2,
+      name: 'Mod',
+      check: (client, message) => {
+        if (message.guild) {
+          const modRole = message.guild.roles.cache.find((r) => r.name.toLowerCase() === client.getSettings(message.guild).modRole.toLowerCase());
+
+          if (modRole && message.member.roles.cache.has(modRole.id)) {
+            return true;
+          }
+        }
+        return false;
+      },
+    },
+    {
+      level: 3,
+      name: 'Admin',
+      check: (client, message) => {
+        if (message.guild) {
+          const adminRole = message.guild.roles.cache.find((r) => r.name.toLowerCase() === client.getSettings(message.guild).adminRole.toLowerCase());
+
+          if ((adminRole && message.member.roles.cache.has(adminRole.id)) || message.member.hasPermission('ADMINISTRATOR')) {
+            return true;
+          }
+        }
+        return false;
+      },
+    },
+    {
+      level: 4,
+      name: 'Server Owner',
+      check: (client, message) => {
+        if (message.guild && message.author.id === message.guild.ownerID) {
+          return true;
+        }
+        return false;
+      },
+    },
+    {
+      level: 8,
+      name: 'Bot Support',
+      check: (client, message) => config.support.includes(message.author.id),
+    },
+    {
+      level: 9,
+      name: 'Bot Admin',
+      check: (client, message) => config.admins.includes(message.author.id),
+    },
+    {
+      level: 10,
+      name: 'Bot Owner',
+      check: (client, message) => config.ownerID === message.author.id,
+    },
+  ],
+};
+
+module.exports = config;
